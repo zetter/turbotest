@@ -2,6 +2,23 @@
 
 <%= render @movie %>
 
+<strong>Actors:</strong> <%= @movie.actors.map(&:name).to_sentence %>
+
+<h3>Add actor </h3>
+<%= form_with(model: Actor.new) do |form| %>
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+    <%= form.hidden_field :movie_id, value: @movie.id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<br/>
+
 <div>
   <%= link_to "Edit this movie", edit_movie_path(@movie) %> |
   <%= link_to "Back to movies", movies_path %>
