@@ -24,7 +24,7 @@ class ActorsController < ApplicationController
     @actor = Actor.new(actor_params)
 
     if @actor.save
-      redirect_to actor_url(@actor), notice: "Actor was successfully created."
+      redirect_to movie_url(@actor.movie), notice: "Actor was successfully created."
     else
       render :new, status: :unprocessable_entity 
     end
