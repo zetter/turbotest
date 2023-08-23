@@ -26,7 +26,19 @@ class ActorsController < ApplicationController
     if @actor.save
       redirect_to movie_url(@actor.movie), notice: "Actor was successfully created."
     else
+      ## one option is to redirect to a actor specific page with the error.
+      ## This means having two forms (movies#show and actors#new)
       render :new, status: :unprocessable_entity 
+      
+      ## another option is to redirect to the movie page with the error
+      ## This is the simplest option and I would recommend this unless there is lots of validation on the form
+      redirect_to movie_url(@actor.movie), notice: "Actor could not be created."
+
+      ## Another option is to render the movie page, setting up the @movie and the @actor.
+      ## If doing this, it would better to move this to movies controller as a #create_actor action 
+      ## so all the setup needed for the show tempalte can be done.
+      @movie = actor.movie
+      render "movies/show", status: :unprocessable_entity
     end
   end
 
